@@ -20,19 +20,31 @@ public class AddTivoliServer {
 	 * 当前运行状态  0：可以进行查询；1：查询添加操作中
 	 */
 	private short runState;
+	/**
+	 * Oracle数据库管理类
+	 */
+	private OracleManager om;
+	/**
+	 * Sybase数据库管理类
+	 */
+	private SybaseManager sm;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		logger.info("进入主程序");
-		new AddTivoliServer().run();
+		AddTivoliServer as = new AddTivoliServer();
+		as.start();
 	}
 	/**
 	 * 运行入口
 	 */
-	public void run() {
+	public void start() {
+		om = null;
+		sm = null;
+		ConfigManager cm = new ConfigManager();
+		logger.info("进入主程序: " + cm.getInterval());
 		this.runState = 0;
 		runTimer = new Timer();
-		runTimer.schedule(addTask, 0, 5000);
+		runTimer.schedule(addTask, 0, cm.getInterval());
 	}
 	/**
 	 * 设置运行状态
@@ -54,13 +66,15 @@ public class AddTivoliServer {
 			}
 			try {
 				runState = 1;
-				OracleManager om = new OracleManager();
+				if (om == null) 
+					om = new OracleManager();
 				ResultSet rs = om.getTivoliData();
 				if (rs == null) {
 					runState = 0;
 					return;
 				}
-				SybaseManager sm = new SybaseManager();
+				if (sm == null)
+					sm = new SybaseManager();
 				while (rs.next()) {
 					if(!sm.insertTivoliData(rs)) {  //如果插入数据失败，直接返回，等待下次插入
 						runState = 0;

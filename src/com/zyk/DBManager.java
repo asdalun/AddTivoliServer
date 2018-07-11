@@ -20,6 +20,10 @@ public class DBManager {
 	 */
 	Connection conn;
 	/**
+	 * 执行声明
+	 */
+	Statement stmt;
+	/**
 	 * 驱动名称
 	 */
 	String DriverName = "";
@@ -43,6 +47,7 @@ public class DBManager {
 		this.DBName = dbname;
 		logger = _logger;
 		this.conn = null;
+		this.stmt = null;
 	}
 	/**
 	 * 连接数据库
@@ -51,6 +56,13 @@ public class DBManager {
 		try {
 			if(this.conn != null) {
 				if (!this.conn.isClosed()) {
+			        if (stmt == null) {
+			        	stmt = conn.createStatement();
+			        }
+			        else if (stmt.isClosed()) {
+			        	stmt = null;
+			        	stmt = conn.createStatement();
+			        }
 					return true;
 				}
 				this.conn.close();
@@ -59,6 +71,13 @@ public class DBManager {
 			Class.forName(this.DriverName);
 	        conn = DriverManager.getConnection(this.ConnectString,
 	                        this.User, this.Password);
+	        if (stmt == null) {
+	        	stmt = conn.createStatement();
+	        }
+	        else if (stmt.isClosed()) {
+	        	stmt = null;
+	        	stmt = conn.createStatement();
+	        }
 	        return true;
 		}
 		catch (Exception ex) {
@@ -76,8 +95,9 @@ public class DBManager {
 			if (!this.conncetToDB()) {
 				return null;
 			}
-			Statement stmt = conn.createStatement();
+			//Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(wl);
+			//stmt.close();
 			return rs;
 		}
 		catch (Exception ex) {
@@ -95,8 +115,9 @@ public class DBManager {
 			if (!this.conncetToDB()) {
 				return false;
 			}
-			Statement stmt = conn.createStatement();
+			//Statement stmt = conn.createStatement();
 			stmt.executeUpdate(wl);
+			//stmt.close();
 			return true;
 		}
 		catch (Exception ex) {

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<info>
+	<!-- 连接数据库查询间隔时间 -->
+	<Interval>5000</Interval>
+</info>
