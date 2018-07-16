@@ -14,7 +14,7 @@ public class ConfigManager {
 	/**
 	 * xml配置文件名称
 	 */
-	private String xmlFile = "aa.xml";
+	private String xmlFile = "D:/AddTivoliServer/aa.xml";
 	/**
 	 * 启动备份线程间隔秒数
 	 */

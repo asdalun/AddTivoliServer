@@ -97,6 +97,7 @@ public class DBManager {
 			}
 			//Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(wl);
+			//logger.info("查询一次数据");
 			//stmt.close();
 			return rs;
 		}

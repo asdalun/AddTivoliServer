@@ -42,6 +42,7 @@ public class AddTivoliServer {
 		sm = null;
 		ConfigManager cm = new ConfigManager();
 		logger.info("进入主程序: " + cm.getInterval());
+		//logger.info("系统启动：");
 		this.runState = 0;
 		runTimer = new Timer();
 		runTimer.schedule(addTask, 0, cm.getInterval());

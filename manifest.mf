@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: com.zyk.AddTivoliServer
-Class-Path: lib/ojdbc6.jar lib/jconnect55.jar lib/log4j-1.2.17.jar lib/dom4j-1.6.1.jar
+Class-Path: ojdbc6.jar jconnect55.jar log4j-1.2.17.jar dom4j-1.6.1.jar
 
